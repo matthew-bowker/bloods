@@ -642,9 +642,7 @@
                 modVal = applyPresets(panelName, test.name, baseVal, presetsSelected);
                 // If panel is U&Es, round all tests to integer except Potassium (1 decimal)
                 if(panelName === "U&Es") {
-                  if(test.name === "Potassium") {
-                    dispVal = roundValue(modVal, 1);
-                  if(test.name === "Calcium (Adjusted)") {
+                  if(test.name === "Potassium" || "Calcium (Adjusted)") {
                     dispVal = roundValue(modVal, 1);
                   } else {
                     dispVal = roundValue(modVal, 0);
