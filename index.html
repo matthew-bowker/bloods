@@ -791,10 +791,9 @@
   <div style="border: 1.5px solid black; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; height:50px;">
     <span style="font-size: 24px; font-weight: bold; color: black;">CONFIDENTIAL PATHOLOGY REPORT</span>
   </div>
-  <!-- Horizontal divider -->
   <hr style="border: 1px solid #000; margin: 10px 0;" />
   
-  <!-- Additional header details -->
+  <!-- Additional Header Details -->
   <div style="font-size: 9px; margin-bottom: 10px;">
     <p style="margin: 2px 0;">Reported Location: St Billy's Hospital</p>
     <p style="margin: 2px 0;">Clinician: Dr Perry Cox (Emergency Physician)</p>
@@ -803,9 +802,9 @@
     <p style="margin: 2px 0;">Sample ID: N,21.97256402.Y (Blood)</p>
     <p style="margin: 2px 0;">Collected: ${document.getElementById("sampleCollection").value || "Collected 01/06/21"}</p>
   </div>
-  
   <hr style="border: 1px solid #000; margin: 10px 0;" />
   
+  <!-- Demographics (Patient Details) Table -->
   <div style="margin-bottom: 10px;">
       <table style="width: 100%; font-size: 10px; border-collapse: collapse; border: none;">
         <thead>
@@ -881,7 +880,7 @@
       const margin = 15;
       let yPos = 12;
       
-      // ---------- Confidential Header Block (without QR code) ----------
+      // ---------- Confidential Header Block ----------
       const headerText = "CONFIDENTIAL PATHOLOGY REPORT";
       doc.setFont("helvetica", "bold");
       doc.setFontSize(24);
@@ -914,6 +913,39 @@
       yPos = headerInfoY + 24;
       
       // ---------- Horizontal Divider ----------
+      doc.line(margin, yPos, pageWidth - margin, yPos);
+      yPos += 4;
+      
+      // ---------- Demographics (Patient Details) Table ----------
+      doc.autoTable({
+        startY: yPos,
+        margin: { left: margin, right: margin },
+        theme: "plain",
+        head: [["Name", "DOB", "Hospital Number", "Sex"]],
+        body: [[window.finalPDFData.patientName, window.finalPDFData.dob, window.finalPDFData.hospitalNumber, window.finalPDFData.sex]],
+        styles: { fontSize: 10, cellPadding: 2 },
+        columnStyles: {
+          0: { cellWidth: 50 },
+          1: { cellWidth: 30 },
+          2: { cellWidth: 50 },
+          3: { cellWidth: 20 }
+        }
+      });
+      yPos = doc.lastAutoTable.finalY + 4;
+      
+      // ---------- Horizontal Divider ----------
+      doc.line(margin, yPos, pageWidth - margin, yPos);
+      yPos += 4;
+      
+      // ---------- AKI Alert (if applicable) ----------
+      if(window.finalPDFData.akiAlertHtml) {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.text("AKI ALERT: Acute Kidney Injury detected. Please review kidney function.", margin, yPos);
+        yPos += 8;
+      }
+      
+      // ---------- Horizontal Divider before Results ----------
       doc.line(margin, yPos, pageWidth - margin, yPos);
       yPos += 4;
       
