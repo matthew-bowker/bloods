@@ -795,6 +795,7 @@
   
   <!-- Additional Header Details -->
   <div style="font-size: 9px; margin-bottom: 10px;">
+    <p style="margin: 2px 0;"></p>
     <p style="margin: 2px 0;">Reported Location: St Billy's Hospital</p>
     <p style="margin: 2px 0;">Clinician: Dr Perry Cox (Emergency Physician)</p>
     <p style="margin: 2px 0;">Date: Tuesday, June 01, 2021</p>
@@ -993,7 +994,7 @@
       // ---------- Footer ----------
       const pageHeight = doc.internal.pageSize.getHeight();
       doc.setFontSize(10);
-      doc.text("This report is computer-generated. For any queries, please contact the laboratory.", pageWidth / 2, pageHeight - 10, { align: "center" });
+      doc.text("This report is for simulated results only. Made on matthew-bowker.github.io/bloods", pageWidth / 2, pageHeight - 10, { align: "center" });
       
       doc.save("lab_results.pdf");
     });
